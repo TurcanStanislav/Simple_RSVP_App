@@ -1,0 +1,30 @@
+﻿@using Simple_RSVP_App.Entities
+@model Simple_RSVP_App.ViewModels.UsersViewModel
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Will attend</th>
+        </tr>
+    </thead>
+
+    @foreach (var user in @Model.Users)
+    {
+        <tr>
+            <td>@user.Firstname</td>
+            <td>@user.Lastname</td>
+            <td>
+                @if (user.Status == State.Not_sure)
+                {
+                    <span>Not sure</span>
+                }
+                else
+                {
+                    <span>@user.Status</span>
+                }
+            </td>
+        </tr>
+    }
+</table>

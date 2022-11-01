@@ -1,0 +1,54 @@
+﻿@model Simple_RSVP_App.ViewModels.UsersViewModel
+@using Simple_RSVP_App.Entities;
+@using System.Linq;
+
+<div>
+    <p>Will be able to attend: @Model.NumberOfAccepted</p>
+    <p>Will not be able to attend: @Model.NumberOfDenied</p>
+    <p>Aren't certain: @Model.NumberOfNotSure</p>
+</div>
+
+<form class="form-horizontal mb-3">
+    <div class="row">
+        <div class="col">
+            <select id="state-list" class="form-select" style="display: inline-block; width:auto; vertical-align: middle">
+                <option value="" selected>All</option>
+                @foreach (var item in Html.GetEnumSelectList<State>())
+                {
+                    <option id="@item.Value">@item.Text</option>
+                }
+            </select>
+
+            <div style="display:inline">
+                <button class="btn btn-primary" type="button" id="search">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="container"></div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            showTable();
+            $("#search").on("click", function() {
+                showTable();
+            });
+        });
+
+        function showTable() {
+            $.ajax({
+                type: 'GET',
+                url: '/Users/GetUsersByFilter',
+                data: { state: $("#state-list").val() },
+                success: function (response) {
+                    $("#container").html(response);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+    </script>
+}
