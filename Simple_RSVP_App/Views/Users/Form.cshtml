@@ -12,12 +12,12 @@
 
     <div class="row mb-3 col-sm-5">
         <div class="col form-group mr-4 col-sm-3">
-            <input type="text" asp-for="Firstname" class="form-control" />
+            <input type="text" asp-for="Firstname" class="form-control" minlength="3" placeholder="Ana" pattern="[A-Za-z]+" title="Please enter Alphabets" required />
             <label asp-for="Firstname"></label>
             <span asp-validation-for="Firstname" class="text-danger"></span>
         </div>
         <div class="col form-group col-sm-5">
-            <input type="text" asp-for="Lastname" class="form-control" />
+            <input type="text" asp-for="Lastname" class="form-control" minlength="3" placeholder="Burdila" pattern="[A-Za-z]+" title="Please enter Alphabets" required />
             <label asp-for="Lastname"></label>
             <span asp-validation-for="Lastname" class="text-danger"></span>
         </div>
@@ -30,7 +30,7 @@
         {
             <br />
             <label asp-for="Status">@option</label>
-            <input type="radio" asp-for="Status" value="@((int)option)" />
+            <input type="radio" asp-for="Status" value="@((int)option)" required/>
         }
     </div>
 
