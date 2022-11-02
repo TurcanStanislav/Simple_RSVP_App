@@ -1,20 +1,23 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Simple_RSVP_App.DbConnection;
-using Simple_RSVP_App.Entities;
+using Simple_RSVP_App.EntityFramework.DbConnection;
+using Simple_RSVP_App.Domain.Entities;
 using Simple_RSVP_App.ViewModels;
+using Simple_RSVP_App.Repository.Interfaces;
+using MapsterMapper;
+using Simple_RSVP_App.Repository.Repositories.UserRepo.DTOs;
 
 namespace Simple_RSVP_App.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IUserRepo _userRepo;
+        private readonly IMapper _mapper;
 
-        public UsersController(AppDbContext context)
+        public UsersController(IUserRepo userRepo, IMapper mapper)
         {
-            _context = context;
+            _userRepo = userRepo;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -27,35 +30,22 @@ namespace Simple_RSVP_App.Controllers
             return View("Form");
         }
 
-        public IActionResult Create(User model)
+        public IActionResult Create(UserDTO user)
         {
-            _context.Users.Add(model);
-            _context.SaveChanges();
+            _userRepo.CreateUser(user);
 
             return RedirectToAction(nameof(GetForm));
         }
 
         public async Task<IActionResult> GetAnalytics()
         {
-            var users = await _context.Users.ToListAsync();
-
-            var vm = new UsersViewModel { 
-                NumberOfAccepted = _context.Users.Where(u => u.Status == State.Yes).Count(),
-                NumberOfDenied = _context.Users.Where(u => u.Status == State.No).Count(),
-                NumberOfNotSure = _context.Users.Where(u => u.Status == State.Not_sure).Count(),
-            };
+            var vm = _mapper.Map<UsersViewModel>(_userRepo.GetAnalytics());
             return View("UsersAnalytics", vm);
         }
 
         public async Task<IActionResult> GetUsersByFilter(State? state)
         {
-            IEnumerable<User> users;
-            if (state == null)
-                users = await _context.Users.ToListAsync();
-            else
-                users = await _context.Users.Where(u => u.Status == state).ToListAsync();
-
-            var vm = new UsersViewModel { Users = users };
+            var vm = new UsersViewModel { Users = await _userRepo.GetUsersByFilter(state) };
             return PartialView("_UsersTablePartialView", vm);
         }
     }
