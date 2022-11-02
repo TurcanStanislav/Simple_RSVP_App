@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Simple_RSVP_App.DbConnection;
+using Simple_RSVP_App.EntityFramework.DbConnection;
 
 namespace Simple_RSVP_App.Extensions
 {

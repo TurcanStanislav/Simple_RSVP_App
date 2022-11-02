@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Simple_RSVP_App.Migrations
+namespace Simple_RSVP_App.EntityFramework.Migrations
 {
     public partial class M2 : Migration
     {

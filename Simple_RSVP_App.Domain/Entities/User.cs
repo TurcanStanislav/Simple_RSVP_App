@@ -1,4 +1,4 @@
-﻿namespace Simple_RSVP_App.Entities
+﻿namespace Simple_RSVP_App.Domain.Entities
 {
     public class User
     {

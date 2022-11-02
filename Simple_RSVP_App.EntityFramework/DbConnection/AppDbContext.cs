@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Simple_RSVP_App.Entities;
+using Simple_RSVP_App.Domain.Entities;
 
-namespace Simple_RSVP_App.DbConnection
+namespace Simple_RSVP_App.EntityFramework.DbConnection
 {
     public class AppDbContext : DbContext
     {

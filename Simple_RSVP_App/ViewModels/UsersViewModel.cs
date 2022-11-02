@@ -1,4 +1,4 @@
-﻿using Simple_RSVP_App.Entities;
+﻿using Simple_RSVP_App.Repository.Repositories.UserRepo.DTOs;
 
 namespace Simple_RSVP_App.ViewModels
 {
@@ -7,6 +7,6 @@ namespace Simple_RSVP_App.ViewModels
         public int? NumberOfAccepted { get; set; }
         public int? NumberOfDenied { get; set; }
         public int? NumberOfNotSure { get; set; }
-        public IEnumerable<User>? Users { get; set; }
+        public IEnumerable<UserDTO>? Users { get; set; }
     }
 }
